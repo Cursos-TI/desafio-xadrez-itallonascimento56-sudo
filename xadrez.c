@@ -1,77 +1,123 @@
 #include <stdio.h>
 
+/* =====================================================
+   FUNÇÕES RECURSIVAS
+   ===================================================== */
+
+/* ---------------------------
+   TORRE (Recursiva)
+   Move para a Direita
+   --------------------------- */
+void moverTorre(int casas) {
+
+    if (casas <= 0) {
+        return; // condição de parada
+    }
+
+    printf("Direita\n");
+    moverTorre(casas - 1); // chamada recursiva
+}
+
+
+/* ---------------------------
+   RAINHA (Recursiva)
+   Move para a Esquerda
+   --------------------------- */
+void moverRainha(int casas) {
+
+    if (casas <= 0) {
+        return; // condição de parada
+    }
+
+    printf("Esquerda\n");
+    moverRainha(casas - 1);
+}
+
+
+/* ---------------------------
+   BISPO (Recursivo + Loops Aninhados)
+   Move na diagonal: Cima e Direita
+   Loop externo -> vertical
+   Loop interno -> horizontal
+   --------------------------- */
+void moverBispo(int casas) {
+
+    if (casas <= 0) {
+        return; // condição de parada
+    }
+
+    // Loop externo (vertical)
+    for (int vertical = 1; vertical <= 1; vertical++) {
+
+        printf("Cima\n");
+
+        // Loop interno (horizontal)
+        for (int horizontal = 1; horizontal <= 1; horizontal++) {
+            printf("Direita\n");
+        }
+    }
+
+    moverBispo(casas - 1);
+}
+
+
+/* =====================================================
+   FUNÇÃO PRINCIPAL
+   ===================================================== */
+
 int main() {
 
-    // ================================
-    // TORRE - usando FOR
-    // Move 5 casas para a direita
-    // ================================
-
     int casasTorre = 5;
+    int casasBispo = 5;
+    int casasRainha = 8;
 
     printf("Movimento da Torre:\n");
-
-    for (int i = 1; i <= casasTorre; i++) {
-        printf("Direita\n");
-    }
-
-
-    // ================================
-    // BISPO - usando WHILE
-    // Move 5 casas na diagonal (Cima e Direita)
-    // ================================
-
-    int casasBispo = 5;
-    int contadorBispo = 1;
+    moverTorre(casasTorre);
 
     printf("\nMovimento do Bispo:\n");
-
-    while (contadorBispo <= casasBispo) {
-        printf("Cima Direita\n");
-        contadorBispo++;
-    }
-
-
-    // ================================
-    // RAINHA - usando DO-WHILE
-    // Move 8 casas para a esquerda
-    // ================================
-
-    int casasRainha = 8;
-    int contadorRainha = 1;
+    moverBispo(casasBispo);
 
     printf("\nMovimento da Rainha:\n");
+    moverRainha(casasRainha);
 
-    do {
-        printf("Esquerda\n");
-        contadorRainha++;
-    } while (contadorRainha <= casasRainha);
-
-
-    // ==================================================
-    // CAVALO - usando LOOPS ANINHADOS (FOR + WHILE)
-    // Move 2 casas para Baixo e 1 para Esquerda
-    // ==================================================
-
-    int movimentosVerticais = 2;   // duas casas para baixo
-    int movimentosHorizontais = 1; // uma casa para esquerda
+    /* =====================================================
+       CAVALO - Loops Complexos
+       Movimento em L:
+       2 casas para Cima
+       1 casa para Direita
+       ===================================================== */
 
     printf("\nMovimento do Cavalo:\n");
 
-    // Loop externo (FOR) controla o movimento vertical
-    for (int i = 1; i <= movimentosVerticais; i++) {
+    int movimentoVertical = 2;
+    int movimentoHorizontal = 1;
 
-        printf("Baixo\n");
+    for (int i = 1; i <= movimentoVertical; i++) {
 
-        // Quando terminar as duas casas para baixo,
-        // executa o movimento horizontal usando WHILE
-        if (i == movimentosVerticais) {
+        if (i > movimentoVertical) {
+            break; // segurança
+        }
 
-            int contadorHorizontal = 1;
+        printf("Cima\n");
 
-            while (contadorHorizontal <= movimentosHorizontais) {
-                printf("Esquerda\n");
-                contadorHorizontal++;
+        // Só executa o horizontal depois das duas casas verticais
+        if (i == movimentoVertical) {
+
+            int j = 1;
+
+            while (j <= movimentoHorizontal) {
+
+                if (j == 0) {
+                    continue; // exemplo de controle de fluxo
+                }
+
+                printf("Direita\n");
+
+                j++;
+
+                if (j > movimentoHorizontal) {
+                    break;
+                }
             }
         }
     }
